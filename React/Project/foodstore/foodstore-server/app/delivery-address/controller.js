@@ -41,6 +41,8 @@ async function index(req, res, next) {
 }
 
 async function store(req, res, next) {
+    console.log(req.user);
+
     let policy = policyFor(req.user);
 
     if (!policy.can('create', 'DeliveryAddress')) {
@@ -50,10 +52,13 @@ async function store(req, res, next) {
         });
     }
 
+
     try {
         let payload = req.body;
         let user = req.user;
 
+        console.log(payload);
+        
         let address = new DeliveryAddress({...payload, user: user._id});
         await address.save();
 

@@ -18,18 +18,19 @@ async function getProvinsi(req, res, next) {
 
 async function getKabupaten(req, res, next) {
     const db_kabupaten = path.resolve(__dirname, './data/regencies.csv');
+    try{
 
-    try {
-        let { kode_indux } = req.query;
+        let kode_induk = req.query["kode_induk"];
         const data = await csv().fromFile(db_kabupaten);
 
-        if (!kode_indux) return res.json(data);
+        if(!kode_induk) return res.json(data);
 
-        return res.json(data.filter(kabupaten => kabupaten.kode_provinsi === kode_indux));
-    } catch (err) {
+        return res.json(data.filter(kabupaten => kabupaten.kode_provinsi === kode_induk));
+
+    } catch(err){
         return res.json({
-            error: 1,
-            message: 'Tidak bisa mengambil data kabupaten, hubungi administrator'
+        error: 1, 
+        message: 'Tidak bisa mengambil data kabupaten, hubungi administrator'
         });
     }
 }
@@ -38,12 +39,12 @@ async function getKecamatan(req, res, next) {
     const db_kecamatan = path.resolve(__dirname, './data/districts.csv');
 
     try {
-        let { kode_indux } = req.query;
+        let kode_induk = await req.query["kode_induk"];
         const data = await csv().fromFile(db_kecamatan);
+        
+        if (!kode_induk) return res.json(data);
 
-        if (!kode_indux) return res.json(data);
-
-        return res.json(data.filter(kecamatan => kecamatan.kode_kabupaten === kode_indux));
+        return res.json(data.filter(kecamatan => kecamatan.kode_kabupaten === kode_induk));
     } catch (err) {
         return res.json({
             error: 1,
@@ -56,11 +57,11 @@ async function getDesa(req, res, next) {
     const db_desa = path.resolve(__dirname, './data/villages.csv');
 
     try {
-        let { kode_indux } = req.query;
+        let kode_induk = req.query["kode_induk"];
         const data = await csv().fromFile(db_desa);
 
-        if (!kode_indux) return res.json(data);
-        return res.json(data.filter(desa => desa.kode_kecamatan === kode_indux));
+        if (!kode_induk) return res.json(data);
+        return res.json(data.filter(desa => desa.kode_kecamatan === kode_induk));
     } catch (err) {
         return res.json({
             error: 1,

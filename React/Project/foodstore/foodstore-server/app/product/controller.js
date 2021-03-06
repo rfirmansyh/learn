@@ -44,7 +44,6 @@ async function index(req, res, next) {
                 .populate('category')
                 .populate('tags');
 
-
         return res.json({
             data: products,
             count

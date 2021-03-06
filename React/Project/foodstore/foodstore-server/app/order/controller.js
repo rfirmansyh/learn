@@ -58,7 +58,8 @@ async function store(req, res, next) {
     }
 
     try {
-        let { delivery_fee, delivery_address } = req.body;
+        let delivery_fee = req.body['delivery_fee'],
+            delivery_address = req.body['delivery_address'];
         let items = await CartItem
                     .find({user: req.user._id})
                     .populate('product');
@@ -71,6 +72,7 @@ async function store(req, res, next) {
         }      
         
         let address = await DeliveryAddress.findOne({_id: delivery_address});
+
 
         let order = new Order({
             _id: new mongoose.Types.ObjectId,
@@ -85,6 +87,7 @@ async function store(req, res, next) {
             },
             user: req.user._id
         })
+
 
         let orderItems = await OrderItem
             .insertMany(
