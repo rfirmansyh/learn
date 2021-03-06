@@ -26,8 +26,9 @@ export default function Invoice() {
                 console.log(data);
                 if (data?.error) {
                     setError(data.message || "Terjadi kesalahan yang tidak diketahui");
+                } else {
+                    setError('');
                 }
-                
                 setInvoice(data);
             })
             .finally(() => setStatus('idle'))

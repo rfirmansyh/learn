@@ -120,10 +120,6 @@ export default function Checkout() {
         dispatch(clearItems());
     }
 
-    React.useEffect(() => {
-        console.log(cart)
-    }, [])
-
     if(!cart.length) {
         return <Redirect to="/" />
     }

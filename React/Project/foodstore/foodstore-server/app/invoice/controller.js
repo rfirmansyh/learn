@@ -11,7 +11,6 @@ async function show(req, res, next) {
             .populate('order')
             .populate('user');
 
-        // return res.json(invoice);
 
         let policy = policyFor(req.user);
         let subjectInvoice = subject('Invoice', { ...invoice, user_id: invoice.user._id });
@@ -27,9 +26,10 @@ async function show(req, res, next) {
         
     } catch (err) {
         
+        console.log('Error Invoice: '+err)
         return res.json({
             error: 1,
-            message: 'Error when getting invoice'
+            message: err
         });
     }
 }
